@@ -42,7 +42,7 @@ prompts = {
 
 # --- 変換処理の実行 ---
 
-if st.button("変換スタート！ 🚀"):
+if st.button("変身！🪄"):
     if not text_input:
         st.warning("まずは変換したい言葉を入力してね！")
     else:
@@ -51,7 +51,7 @@ if st.button("変換スタート！ 🚀"):
             try:
                 # OpenAI APIへのリクエスト
                 response = client.chat.completions.create(
-                    model="gpt-4o-mini", # コストパフォーマンスの良いモデル
+                    model="gpt-4o-mini",
                     messages=[
                         {"role": "system", "content": prompts[style]}, # キャラクター設定
                         {"role": "user", "content": text_input}      # ユーザーの入力
@@ -63,7 +63,7 @@ if st.button("変換スタート！ 🚀"):
                 result = response.choices[0].message.content
                 
                 # 結果表示
-                st.success("変換完了！")
+                st.success("変身完了！")
                 st.markdown(f"### 【{style}】")
                 st.info(result)
                 
