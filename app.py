@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+from openai import OpenAI, AuthenticationError, RateLimitError, APIConnectionError, OpenAIError
 import os
 from dotenv import load_dotenv
 
@@ -67,5 +67,12 @@ if st.button("変身！🪄"):
                 st.markdown(f"### 【{style}】")
                 st.info(result)
                 
-            except Exception as e:
-                st.error(f"エラーが発生しました: {e}")
+            except AuthenticationError:
+                st.error("APIキーが正しくありません。OpenAIの管理画面でキーを確認してください。")
+            except RateLimitError:
+                st.error("クレジット不足か、APIの呼び出し制限に達しました。Billing設定を確認してください。")
+            except APIConnectionError:
+                st.error("OpenAIのサーバーに接続できませんでした。通信環境を確認してください。")
+            except OpenAIError as e:
+                # その他のOpenAI関連のエラー（サーバーエラーなど）
+                st.error(f"AI側でエラーが発生しました: {e}")
